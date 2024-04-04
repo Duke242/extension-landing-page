@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { useRef, useState } from "react";
+import { useRef, useState } from "react"
 
 // <FAQ> component is a lsit of <Item> component
 // Just import the FAQ & add your FAQ content to the const faqList
@@ -8,41 +8,36 @@ import { useRef, useState } from "react";
 const faqList = [
   {
     question: "What do I get exactly?",
-    answer: <div className="space-y-2 leading-relaxed">Loreum Ipseum</div>,
-  },
-  {
-    question: "Can I get a refund?",
     answer: (
-      <p>
-        Yes! You can request a refund within 7 days of your purchase. Reach out
-        by email.
-      </p>
+      <div className="space-y-2 leading-relaxed">
+        A tool to use AI to Make better decisions.
+      </div>
     ),
   },
   {
-    question: "I have another question",
-    answer: (
-      <div className="space-y-2 leading-relaxed">Cool, contact us by email</div>
-    ),
+    question: "Is is a subscription?",
+    answer: <p>Nope. You pay once and it is yours forever.</p>,
   },
-];
+]
 
 const Item = ({ item }) => {
-  const accordion = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const accordion = useRef(null)
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <li>
       <button
         className="relative flex gap-2 items-center w-full py-5 text-base font-semibold text-left border-t md:text-lg border-base-content/10"
         onClick={(e) => {
-          e.preventDefault();
-          setIsOpen(!isOpen);
+          e.preventDefault()
+          setIsOpen(!isOpen)
         }}
         aria-expanded={isOpen}
       >
         <span
-          className={`flex-1 text-base-content ${isOpen ? "text-primary" : ""}`}
+          className={`flex-1 text-base-content ${
+            isOpen ? "text-[#2fbbee]" : ""
+          }`}
         >
           {item?.question}
         </span>
@@ -84,15 +79,15 @@ const Item = ({ item }) => {
         <div className="pb-5 leading-relaxed">{item?.answer}</div>
       </div>
     </li>
-  );
-};
+  )
+}
 
 const FAQ = () => {
   return (
     <section className="bg-base-200" id="faq">
       <div className="py-24 px-8 max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
         <div className="flex flex-col text-left basis-1/2">
-          <p className="inline-block font-semibold text-primary mb-4">FAQ</p>
+          <p className="inline-block font-semibold text-[#2fbbee] mb-4">FAQ</p>
           <p className="sm:text-4xl text-3xl font-extrabold text-base-content">
             Frequently Asked Questions
           </p>
@@ -105,7 +100,7 @@ const FAQ = () => {
         </ul>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default FAQ;
+export default FAQ
