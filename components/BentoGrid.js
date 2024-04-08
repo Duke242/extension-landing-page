@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from "react"
-import Draggable from "react-draggable"
-import { ResizableBox } from "react-resizable"
+import { Rnd } from "react-rnd"
 
 const BentoGrid = () => {
   // State to hold the color
@@ -19,8 +18,16 @@ const BentoGrid = () => {
   }
 
   // Function to handle click on a grid item
-  const handleClick = (title) => {
-    // alert(`You clicked on ${title}`)
+  const handleClick = (id) => {
+    // Find the tile index
+    const index = tiles.findIndex((tile) => tile.id === id)
+    // Move the clicked tile to the end of the array to ensure it's rendered on top
+    const updatedTiles = [
+      ...tiles.slice(0, index),
+      ...tiles.slice(index + 1),
+      tiles[index],
+    ]
+    setTiles(updatedTiles)
   }
 
   // Function to add a new title
@@ -32,10 +39,20 @@ const BentoGrid = () => {
   }
 
   // Function to handle tile resize
-  const onResize = (id, event, data) => {
+
+  const onResize = (id, direction, ref, delta, position) => {
+    const { width, height } = ref.style
+    const newWidth = parseInt(width, 10) + delta.width
+    const newHeight = parseInt(height, 10) + delta.height
+
     const newTiles = tiles.map((tile) =>
       tile.id === id
-        ? { ...tile, width: data.size.width, height: data.size.height }
+        ? {
+            ...tile,
+            width: newWidth,
+            height: newHeight,
+            ...position,
+          }
         : tile
     )
     setTiles(newTiles)
@@ -65,23 +82,29 @@ const BentoGrid = () => {
         className="flex flex-wrap gap-4 p-4 border border-gray-300 rounded-lg overflow-auto"
       >
         {tiles.map((tile) => (
-          <Draggable key={tile.id} handle=".handle">
-            <ResizableBox
-              width={tile.width}
-              height={tile.height}
-              resizeHandles={["se", "sw", "ne", "nw"]}
-              onResize={(event, data) => onResize(tile.id, event, data)}
-              className="relative"
+          <Rnd
+            key={tile.id}
+            size={{ width: tile.width, height: tile.height }}
+            minWidth={50}
+            minHeight={50}
+            bounds="parent"
+            onResize={(e, direction, ref, delta, position) =>
+              onResize(tile.id, direction, ref, delta, position)
+            }
+            enableResizing={{
+              bottomRight: true, // Only allow resizing on the southeast (se) corner
+            }}
+            className="rounded-xl border-2 border-gray-300 bg-gray-100 p-0 hover:bg-gray-200 transition duration-300 ease-in-out cursor-move"
+            // Pass a ref callback to capture the DOM element being resized
+            ref={(c) => (tile.ref = c)}
+          >
+            <div
+              onClick={() => handleClick(tile.id)}
+              style={{ padding: 0, margin: 0 }}
             >
-              <div className="rounded-xl border-2 border-gray-300 bg-gray-100 p-4 hover:bg-gray-200 transition duration-300 ease-in-out">
-                <div className="handle cursor-move">
-                  <span onClick={() => handleClick(tile.title)}>
-                    {tile.title}
-                  </span>
-                </div>
-              </div>
-            </ResizableBox>
-          </Draggable>
+              <span>{tile.title}</span>
+            </div>
+          </Rnd>
         ))}
       </div>
     </div>
