@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { getSEOTags } from "@/libs/seo";
-import config from "@/config";
+import Link from "next/link"
+import { getSEOTags } from "@/libs/seo"
+import config from "@/config"
 
 // CHATGPT PROMPT TO GENERATE YOUR TERMS & SERVICES — replace with your own data 👇
 
@@ -28,7 +28,7 @@ import config from "@/config";
 export const metadata = getSEOTags({
   title: `Terms and Conditions | ${config.appName}`,
   canonicalUrlRelative: "/tos",
-});
+})
 
 const TOS = () => {
   return (
@@ -57,43 +57,44 @@ const TOS = () => {
           className="leading-relaxed whitespace-pre-wrap"
           style={{ fontFamily: "sans-serif" }}
         >
-          {`Last Updated: September 26, 2023
+          {`Terms of Service
 
-Welcome to ShipFast!
+Last Updated: April 6, 2024
 
-These Terms of Service ("Terms") govern your use of the ShipFast website at https://shipfa.st ("Website") and the services provided by ShipFast. By using our Website and services, you agree to these Terms.
+Welcome to BentoGrids! By accessing or using our website at https://bentogrids.org, you agree to comply with and be bound by the following terms and conditions of use. Please review these terms carefully before using our services.
 
-1. Description of ShipFast
+Acceptance of Terms
 
-ShipFast is a platform that offers a JavaScript code boilerplate to assist entrepreneurs in launching their startups more efficiently.
+By using BentoGrids, you agree to these Terms of Service and our Privacy Policy. If you do not agree with any part of these terms, you may not access or use our services.
 
-2. Ownership and Usage Rights
+User Data
 
-When you purchase a package from ShipFast, you gain the right to download and use the code provided for creating applications. You own the code you create but do not have the right to resell it. We offer a full refund within 7 days of purchase, as specified in our refund policy.
+By using our services, you agree to provide accurate and complete information, including your name, email, and payment information if applicable. You also consent to the collection and use of this information for order processing purposes as outlined in our Privacy Policy.
+Non-Personal Data Collection
 
-3. User Data and Privacy
+We may use web cookies to collect non-personal information for the purpose of improving user experience and website functionality. By using our services, you consent to the use of cookies as described in our Privacy Policy.
 
-We collect and store user data, including name, email, and payment information, as necessary to provide our services. For details on how we handle your data, please refer to our Privacy Policy at https://shipfa.st/privacy-policy.
+Data Sharing
 
-4. Non-Personal Data Collection
+We do not share your personal data with any third parties. Your information is kept confidential and secure.
 
-We use web cookies to collect non-personal data for the purpose of improving our services and user experience.
+Children's Privacy
 
-5. Governing Law
+BentoGrids is not intended for children under the age of 13, and we do not knowingly collect any personal information from children. By using our services, you affirm that you are 13 years of age or older.
 
-These Terms are governed by the laws of France.
+Updates to Terms of Service
 
-6. Updates to the Terms
+We reserve the right to update or modify these Terms of Service at any time without prior notice. Users will be notified of any changes via email. Continued use of our services after any modifications to the Terms of Service constitutes acceptance of those changes.
+If you have any questions or concerns about these Terms of Service, please contact us.
 
-We may update these Terms from time to time. Users will be notified of any changes via email.
+Thank you for using BentoGrids!
 
-For any questions or concerns regarding these Terms of Service, please contact us at marc@shipfa.st.
-
-Thank you for using ShipFast!`}
+Sincerely,
+The BentoGrids Team`}
         </pre>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default TOS;
+export default TOS

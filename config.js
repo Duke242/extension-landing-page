@@ -2,11 +2,11 @@ import themes from "daisyui/src/theming/themes.js"
 
 const config = {
   // REQUIRED
-  appName: "ThinkItThro",
+  appName: "BentoGrids",
   // REQUIRED: a short description of your app for SEO tags (can be overwritten)
-  appDescription: "Use AI to Make Better Decisions.",
+  appDescription: "Create Bento Grids, easily.",
   // REQUIRED (no https://, not trialing slash at the end, just the naked domain)
-  domainName: "shipfa.st",
+  domainName: "bentogrids.org",
   crisp: {
     // Crisp website ID. IF YOU DON'T USE CRISP: just remove this => Then add a support email in this config file (mailgun.supportEmail) otherwise customer support won't work.
     id: "",
@@ -25,18 +25,18 @@ const config = {
         //  REQUIRED - Name of the plan, displayed on the pricing page
         name: "Starter",
         // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
-        description: "Perfect for small projects",
+        // description: "Perfect for small projects",
         // The price you want to display, the one user will be charged on Stripe.
-        price: 79,
+        price: 9,
         // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
-        priceAnchor: 99,
+        priceAnchor: 29,
         features: [
-          {
-            name: "NextJS boilerplate",
-          },
-          { name: "User oauth" },
-          { name: "Database" },
-          { name: "Emails" },
+          // {
+          //   name: "NextJS boilerplate",
+          // },
+          // { name: "User oauth" },
+          // { name: "Database" },
+          // { name: "Emails" },
         ],
       },
       // {
