@@ -22,28 +22,15 @@ const BentoGrid = () => {
       height: 100,
       fontSize: 16,
       fontFamily: "Arial",
+      textAlign: "center", // Adding textAlign property
     },
   ])
   const [selectedTile, setSelectedTile] = useState(null)
-  const [fontSize, setFontSize] = useState(16)
-  const [fontFamily, setFontFamily] = useState("Arial")
   const [backgroundSelected, setBackgroundSelected] = useState(false)
-  const [selectedTileProperties, setSelectedTileProperties] = useState(null) // State to hold properties of selected Rnd component
-
-  const handleChangeColor = () => {
-    const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16)
-    setColor(randomColor)
-    setSelectedTile(null)
-    setTiles(
-      tiles.map((tile) => ({ ...tile, fontSize: 16, fontFamily: "Arial" }))
-    )
-  }
 
   const handleClick = (id) => {
     setSelectedTile(id)
     setBackgroundSelected(false)
-    const tile = tiles.find((tile) => tile.id === id)
-    setSelectedTileProperties(tile) // Update selected tile properties
   }
 
   const addTitle = () => {
@@ -56,6 +43,7 @@ const BentoGrid = () => {
         height: 100,
         fontSize: 16,
         fontFamily: "Arial",
+        textAlign: "center", // Adding textAlign property for new tiles
       },
     ])
   }
@@ -66,38 +54,35 @@ const BentoGrid = () => {
       tile.id === id ? { ...tile, title: newTitle } : tile
     )
     setTiles(newTiles)
-    if (selectedTile === id) {
-      setSelectedTileProperties({ ...selectedTileProperties, title: newTitle })
-    }
   }
 
   const handleFontSizeChange = (event) => {
     const newSize = parseInt(event.target.value)
-    setFontSize(newSize)
     if (selectedTile !== null) {
       const newTiles = tiles.map((tile) =>
         tile.id === selectedTile ? { ...tile, fontSize: newSize } : tile
       )
       setTiles(newTiles)
-      setSelectedTileProperties({
-        ...selectedTileProperties,
-        fontSize: newSize,
-      })
     }
   }
 
   const handleFontFamilyChange = (event) => {
     const newFontFamily = event.target.value
-    setFontFamily(newFontFamily)
     if (selectedTile !== null) {
       const newTiles = tiles.map((tile) =>
         tile.id === selectedTile ? { ...tile, fontFamily: newFontFamily } : tile
       )
       setTiles(newTiles)
-      setSelectedTileProperties({
-        ...selectedTileProperties,
-        fontFamily: newFontFamily,
-      })
+    }
+  }
+
+  const handleTextAlignChange = (event) => {
+    const newTextAlign = event.target.value
+    if (selectedTile !== null) {
+      const newTiles = tiles.map((tile) =>
+        tile.id === selectedTile ? { ...tile, textAlign: newTextAlign } : tile
+      )
+      setTiles(newTiles)
     }
   }
 
@@ -105,7 +90,7 @@ const BentoGrid = () => {
     <div className="flex items-start h-screen bg-gray-100 p-6">
       <div className="mr-2 bg-white rounded shadow w-1/5">
         <button
-          className="text-left mb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition"
+          className="text-left pb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition duration-300"
           onClick={() => setBackgroundSelected(true)}
         >
           Background
@@ -114,7 +99,7 @@ const BentoGrid = () => {
           {tiles.map((tile) => (
             <button
               key={tile.id}
-              className={`text-left mb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition ${
+              className={`text-left pb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition ${
                 selectedTile === tile.id ? "bg-gray-300" : ""
               }`}
               onClick={() => handleClick(tile.id)}
@@ -154,20 +139,25 @@ const BentoGrid = () => {
               <input
                 type="number"
                 id="fontSize"
-                value={selectedTileProperties?.fontSize || fontSize}
+                value={
+                  tiles.find((tile) => tile.id === selectedTile)?.fontSize || ""
+                }
                 onChange={handleFontSizeChange}
                 min="10"
                 max="50"
                 className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
               />
             </div>
-            <div>
+            <div className="mb-4">
               <label htmlFor="fontFamily" className="block mb-1">
                 Font Family:
               </label>
               <select
                 id="fontFamily"
-                value={selectedTileProperties?.fontFamily || fontFamily}
+                value={
+                  tiles.find((tile) => tile.id === selectedTile)?.fontFamily ||
+                  ""
+                }
                 onChange={handleFontFamilyChange}
                 className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
               >
@@ -175,6 +165,24 @@ const BentoGrid = () => {
                 <option value="Verdana">Verdana</option>
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Courier New">Courier New</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="textAlign" className="block mb-1">
+                Text Align:
+              </label>
+              <select
+                id="textAlign"
+                value={
+                  tiles.find((tile) => tile.id === selectedTile)?.textAlign ||
+                  "left"
+                }
+                onChange={handleTextAlignChange}
+                className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              >
+                <option value="left">Left</option>
+                <option value="center">Center</option>
+                <option value="right">Right</option>
               </select>
             </div>
           </div>
@@ -200,9 +208,9 @@ const BentoGrid = () => {
             key={tile.id}
             style={{
               ...style,
-              fontSize: tile.id === selectedTile ? fontSize : tile.fontSize,
-              fontFamily:
-                tile.id === selectedTile ? fontFamily : tile.fontFamily,
+              fontSize: tile.fontSize,
+              fontFamily: tile.fontFamily,
+              textAlign: tile.textAlign, // Apply textAlign style
             }}
             default={{
               x: 0,
@@ -217,10 +225,12 @@ const BentoGrid = () => {
                 type="text"
                 value={tile.title}
                 onChange={(e) => handleTitleChange(tile.id, e)}
+                className="outline-none"
                 style={{
                   background: "transparent",
                   border: "none",
                   width: "100%",
+                  textAlign: tile.textAlign, // Apply textAlign style
                 }}
               />
             </div>
