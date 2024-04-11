@@ -27,17 +27,9 @@ export default async function Dashboard() {
     // }
 
     // const userAccess = profiles[0].has_access
-    const titles = [
-      "Title 1",
-      "Title 2",
-      "Title 3",
-      "Title 4",
-      "Title 5",
-      "Title 6",
-      // Add more titles as needed
-    ]
+
     const userAccess = true
-    console.log({ userAccess })
+
     if (userAccess) {
       return (
         <main className="min-h-screen p-8 pb-24">
@@ -45,7 +37,7 @@ export default async function Dashboard() {
           <header className="mb-6">
             <ButtonAccount />
           </header>
-          <BentoGrid titles={titles} />
+          <BentoGrid />
           {/* </section> */}
         </main>
       )

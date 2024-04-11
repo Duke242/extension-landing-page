@@ -2,6 +2,8 @@
 import React, { useState } from "react"
 import ColorPicker from "react-best-gradient-color-picker"
 import { Rnd } from "react-rnd"
+import { TiDelete } from "react-icons/ti"
+import { IoAddCircleOutline } from "react-icons/io5"
 
 const BentoGrid = () => {
   const defaultTile = {
@@ -28,7 +30,7 @@ const BentoGrid = () => {
   }
 
   const [color, setColor] = useState("#ffffff")
-  const [tiles, setTiles] = useState([{ id: Date.now(), ...defaultTile }])
+  const [tiles, setTiles] = useState([])
   const [selectedTile, setSelectedTile] = useState(null)
   const [backgroundSelected, setBackgroundSelected] = useState(false)
   const [selectedColor, setSelectedColor] = useState("#ffffff")
@@ -51,6 +53,11 @@ const BentoGrid = () => {
       // Update selectedColor to the background color of the new tile
       setSelectedColor(newSelectedTile.backgroundColor)
     }
+  }
+
+  const deleteTile = (id) => {
+    const filteredTiles = tiles.filter((tile) => tile.id !== id)
+    setTiles(filteredTiles)
   }
 
   const handleTileClick = (id) => {
@@ -160,7 +167,7 @@ const BentoGrid = () => {
   }
 
   return (
-    <div className="flex items-start h-screen bg-gray-100 p-6">
+    <div className="flex items-start h-fit bg-gray-100 p-6">
       <div className="mr-2 bg-white rounded shadow w-36">
         <button
           className={`text-left pb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition duration-300 ${
@@ -172,29 +179,40 @@ const BentoGrid = () => {
         </button>
         <div>
           {tiles.map((tile) => (
-            <button
-              key={tile.id}
-              className={`text-left pb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition ${
-                selectedTile === tile.id ? "bg-gray-300" : ""
-              }`}
-              onClick={() => handleClick(tile.id)}
-            >
-              {tile.title ? (
-                tile.title.length > 9 ? (
-                  tile.title.slice(0, 9) + "..."
+            <div key={tile.id} className="relative">
+              <button
+                className={`flex line-clamp-1 text-left pb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition ${
+                  selectedTile === tile.id ? "bg-gray-300" : ""
+                }`}
+                onClick={() => handleClick(tile.id)}
+              >
+                {tile.title ? (
+                  tile.title.length > 8 ? (
+                    tile.title.slice(0, 8) + "..."
+                  ) : (
+                    tile.title
+                  )
                 ) : (
-                  tile.title
-                )
-              ) : (
-                <i>No Name</i>
+                  <i>No Name</i>
+                )}
+              </button>
+              {selectedTile === tile.id && (
+                <button
+                  className="absolute top-0 right-0 mt-1 mr-1 transition-transform duration-300 transform hover:scale-110"
+                  onClick={() => deleteTile(tile.id)}
+                >
+                  <TiDelete size={25} color="red" />
+                </button>
               )}
-            </button>
+            </div>
           ))}
           <button
-            className="text-left mb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition"
+            className="flex items-center justify-center mb-2 py-2 px-6 text-md w-full hover:rounded transition transform hover:scale-110"
             onClick={addTitle}
           >
-            +
+            <span>
+              <IoAddCircleOutline size={25} color="green" />
+            </span>
           </button>
         </div>
       </div>
@@ -211,13 +229,20 @@ const BentoGrid = () => {
           </div>
         ) : (
           <>
-            <div className="mb-4">
+            <div className="">
               <label htmlFor="fontSize" className="block mb-1">
                 Font Size:
+                <span className="text-sm ml-2">
+                  {tiles.find((tile) => tile.id === selectedTile)?.fontSize ||
+                    0}
+                  px
+                </span>
               </label>
               <input
-                type="number"
+                type="range"
                 id="fontSize"
+                min="10"
+                max="100"
                 value={
                   tiles.find((tile) => tile.id === selectedTile)?.fontSize || ""
                 }
@@ -228,11 +253,10 @@ const BentoGrid = () => {
                     parseInt(e.target.value)
                   )
                 }
-                min="10"
-                max="100"
-                className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                className="w-full"
               />
             </div>
+
             <div className="mb-4">
               <label htmlFor="fontFamily" className="block mb-1">
                 Font Family:
@@ -276,8 +300,8 @@ const BentoGrid = () => {
                 <option value="Century">Century</option>
               </select>
             </div>
-            <div className="mb-4">
-              <label htmlFor="textAlign" className="block mb-1">
+            <div className="mb-4 flex items-center justify-between">
+              <label htmlFor="textAlign" className="block mb-1 mr-2">
                 Text Align:
               </label>
               <select
@@ -293,15 +317,13 @@ const BentoGrid = () => {
                     e.target.value
                   )
                 }
-                className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                className="w-2/3 py-2 mr-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
               >
                 <option value="left">Left</option>
                 <option value="center">Center</option>
                 <option value="right">Right</option>
               </select>
-            </div>
-            <div className="mb-4">
-              <label htmlFor="alignVertical" className="block mb-1">
+              <label htmlFor="alignVertical" className="block mb-1 mr-2">
                 Vertical Align:
               </label>
               <select
@@ -317,7 +339,7 @@ const BentoGrid = () => {
                     e.target.value
                   )
                 }
-                className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                className="w-2/3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
               >
                 {verticalAlignOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -326,6 +348,7 @@ const BentoGrid = () => {
                 ))}
               </select>
             </div>
+
             <div className="mb-4">
               <label htmlFor="dropShadow" className="block mb-1">
                 Drop Shadow:
@@ -379,6 +402,9 @@ const BentoGrid = () => {
           height: "75vh",
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+          // backgroundImage:
+          //   "linear-gradient(to right, lightgray 1px, transparent 1px), linear-gradient(to bottom, lightgray 1px, transparent 1px)",
+          // backgroundSize: "20px 20px",
           gap: "10px",
           borderRadius: "20px",
           padding: "20px",
