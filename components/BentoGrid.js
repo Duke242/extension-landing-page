@@ -33,8 +33,25 @@ const BentoGrid = () => {
   const [backgroundSelected, setBackgroundSelected] = useState(false)
 
   const handleClick = (id) => {
-    setSelectedTile(id)
-    setBackgroundSelected(false)
+    if (selectedTile === id) {
+      // If the clicked tile is already selected, deselect it
+      setSelectedTile(null)
+    } else {
+      // If the clicked tile is not selected, select it
+      setSelectedTile(id)
+      setBackgroundSelected(false)
+    }
+  }
+
+  const backgroundSelectedFunc = () => {
+    if (backgroundSelected) {
+      // If background is already selected, deselect it
+      setBackgroundSelected(false)
+    } else {
+      // If background is not selected, select it
+      setSelectedTile(null)
+      setBackgroundSelected(true)
+    }
   }
 
   const addTitle = () => {
@@ -96,8 +113,10 @@ const BentoGrid = () => {
     <div className="flex items-start h-screen bg-gray-100 p-6">
       <div className="mr-2 bg-white rounded shadow w-36">
         <button
-          className="text-left pb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition duration-300"
-          onClick={() => setBackgroundSelected(true)}
+          className={`text-left pb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition duration-300 ${
+            backgroundSelected ? "bg-gray-300" : ""
+          }`}
+          onClick={backgroundSelectedFunc}
         >
           Background
         </button>
@@ -111,8 +130,8 @@ const BentoGrid = () => {
               onClick={() => handleClick(tile.id)}
             >
               {tile.title ? (
-                tile.title.length > 20 ? (
-                  tile.title.slice(0, 20) + "..."
+                tile.title.length > 9 ? (
+                  tile.title.slice(0, 9) + "..."
                 ) : (
                   tile.title
                 )
@@ -131,7 +150,10 @@ const BentoGrid = () => {
       </div>
       <div className="mr-2 bg-white p-6 rounded shadow w-3/12 overflow-scroll">
         <h2 className="text-center mb-4 text-lg font-semibold">Properties</h2>
-        {backgroundSelected ? (
+        {console.log({ backgroundSelected, selectedTile })}
+        {backgroundSelected === false && selectedTile === null ? (
+          <div>Nothing selected</div>
+        ) : backgroundSelected ? (
           <div className="mb-4">
             <label htmlFor="backgroundColor" className="block mb-1">
               Background Color:
@@ -276,6 +298,7 @@ const BentoGrid = () => {
                 className="mr-2"
               />
             </div>
+            <ColorPicker className={"mb-5"} />
             <div className="flex justify-between gap-2">
               <button
                 className="w-1/2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
