@@ -31,16 +31,38 @@ const BentoGrid = () => {
   const [tiles, setTiles] = useState([{ id: Date.now(), ...defaultTile }])
   const [selectedTile, setSelectedTile] = useState(null)
   const [backgroundSelected, setBackgroundSelected] = useState(false)
+  const [selectedColor, setSelectedColor] = useState("#ffffff")
 
-  const handleClick = (id) => {
+  const handleClick = (id, event) => {
+    // Ensure event is always present and not undefined
+
     if (selectedTile === id) {
       // If the clicked tile is already selected, deselect it
       setSelectedTile(null)
+      setBackgroundSelected(false)
     } else {
       // If the clicked tile is not selected, select it
       setSelectedTile(id)
       setBackgroundSelected(false)
+
+      // Find the newly selected tile
+      const newSelectedTile = tiles.find((tile) => tile.id === id)
+
+      // Update selectedColor to the background color of the new tile
+      setSelectedColor(newSelectedTile.backgroundColor)
     }
+  }
+
+  const handleTileClick = (id) => {
+    // Prevent deselection when clicking inside the tile
+    setSelectedTile(id)
+    setBackgroundSelected(false)
+
+    // Find the clicked tile
+    const clickedTile = tiles.find((tile) => tile.id === id)
+
+    // Update selectedColor to the background color of the clicked tile
+    setSelectedColor(clickedTile.backgroundColor)
   }
 
   const backgroundSelectedFunc = () => {
@@ -70,13 +92,16 @@ const BentoGrid = () => {
     const newTiles = tiles.map((tile) =>
       tile.id === id ? { ...tile, [property]: value } : tile
     )
+
     if (property === "backgroundColor") {
-      // If changing background color, update all tiles
-      newTiles.forEach((tile) => {
-        tile.backgroundColor = value
-      })
+      // Update background color of the selected tile only
+      const updatedTiles = newTiles.map((tile) =>
+        tile.id === id ? { ...tile, backgroundColor: value } : tile
+      )
+      setTiles(updatedTiles)
+    } else {
+      setTiles(newTiles)
     }
-    setTiles(newTiles)
   }
 
   const verticalAlignOptions = [
@@ -298,7 +323,14 @@ const BentoGrid = () => {
                 className="mr-2"
               />
             </div>
-            <ColorPicker className={"mb-5"} />
+            <ColorPicker
+              value={selectedColor}
+              onChange={(color) => {
+                setSelectedColor(color)
+                handlePropertyChange(selectedTile, "backgroundColor", color)
+              }}
+              className={"mb-5"}
+            />
             <div className="flex justify-between gap-2">
               <button
                 className="w-1/2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
@@ -352,7 +384,7 @@ const BentoGrid = () => {
               width: tile.width,
               height: tile.height,
             }}
-            onClick={() => handleClick(tile.id)}
+            onClick={() => handleTileClick(tile.id)}
           >
             <div>
               <input
