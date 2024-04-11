@@ -13,7 +13,7 @@ const BentoGrid = () => {
     textAlign: "center",
     dropShadow: true,
     alignItems: "flex-start", // Changed property name to alignItems
-    backgroundColor: "lightgray", // Added backgroundColor property
+    backgroundColor: "lightgray",
   }
 
   const style = {
@@ -35,7 +35,7 @@ const BentoGrid = () => {
 
   const handleClick = (id, event) => {
     // Ensure event is always present and not undefined
-
+    console.log({ color })
     if (selectedTile === id) {
       // If the clicked tile is already selected, deselect it
       setSelectedTile(null)
@@ -87,7 +87,6 @@ const BentoGrid = () => {
     )
     setTiles(newTiles)
   }
-
   const handlePropertyChange = (id, property, value) => {
     const newTiles = tiles.map((tile) =>
       tile.id === id ? { ...tile, [property]: value } : tile
@@ -95,14 +94,40 @@ const BentoGrid = () => {
 
     if (property === "backgroundColor") {
       // Update background color of the selected tile only
-      const updatedTiles = newTiles.map((tile) =>
-        tile.id === id ? { ...tile, backgroundColor: value } : tile
-      )
+      const updatedTiles = newTiles.map((tile) => {
+        if (tile.id === id) {
+          console.log(
+            `Setting background color for tile with id ${id} to ${value}`
+          )
+          console.log({ value })
+          return { ...tile, backgroundColor: value }
+        } else {
+          return tile
+        }
+      })
+
       setTiles(updatedTiles)
     } else {
       setTiles(newTiles)
     }
   }
+
+  // const handlePropertyChange = (id, property, value) => {
+  //   const newTiles = tiles.map((tile) =>
+  //     tile.id === id ? { ...tile, [property]: value } : tile
+  //   )
+
+  //   if (property === "backgroundColor") {
+  //     // Update background color of the selected tile only
+  //     const updatedTiles = newTiles.map((tile) =>
+  //       tile.id === id ? { ...tile, backgroundColor: value } : tile
+  //     )
+
+  //     setTiles(updatedTiles)
+  //   } else {
+  //     setTiles(newTiles)
+  //   }
+  // }
 
   const verticalAlignOptions = [
     { label: "Top", value: "flex-start" },
@@ -173,9 +198,8 @@ const BentoGrid = () => {
           </button>
         </div>
       </div>
-      <div className="mr-2 bg-white p-6 rounded shadow w-3/12 overflow-scroll">
+      <div className="mr-2 bg-white p-6 rounded shadow w-3/12 h-auto overflow-scroll max-h-[75vh]">
         <h2 className="text-center mb-4 text-lg font-semibold">Properties</h2>
-        {console.log({ backgroundSelected, selectedTile })}
         {backgroundSelected === false && selectedTile === null ? (
           <div>Nothing selected</div>
         ) : backgroundSelected ? (
@@ -376,11 +400,11 @@ const BentoGrid = () => {
                 ? "2px 2px 4px rgba(0, 0, 0, 0.1)"
                 : "none",
               alignItems: tile.alignItems,
-              backgroundColor: tile.backgroundColor, // Set background color for each tile
+              background: tile.backgroundColor,
             }}
             default={{
-              x: 0,
-              y: 0,
+              x: 20,
+              y: 20,
               width: tile.width,
               height: tile.height,
             }}
