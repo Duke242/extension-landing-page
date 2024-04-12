@@ -13,8 +13,8 @@ const BentoGrid = () => {
     fontSize: 16,
     fontFamily: "Arial",
     textAlign: "center",
-    dropShadow: true,
-    alignItems: "flex-start", // Changed property name to alignItems
+    boxShadow: "shadow-md",
+    alignItems: "flex-start",
     backgroundColor: "lightgray",
   }
 
@@ -25,32 +25,41 @@ const BentoGrid = () => {
     borderRadius: "20px",
     overflow: "hidden",
     backgroundColor: "lightgray",
-    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
+    // boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
     textAlign: "center",
   }
 
+  const shadowSizeMapping = {
+    "shadow-sm": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+    "shadow-md":
+      "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
+    "shadow-lg":
+      "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)",
+    "shadow-xl":
+      "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
+    "shadow-2xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+  }
+
   const [color, setColor] = useState("#ffffff")
-  const [tiles, setTiles] = useState([])
+  const [tiles, setTiles] = useState([
+    {
+      id: Date.now(),
+      ...defaultTile,
+    },
+  ])
   const [selectedTile, setSelectedTile] = useState(null)
   const [backgroundSelected, setBackgroundSelected] = useState(false)
   const [selectedColor, setSelectedColor] = useState("#ffffff")
 
-  const handleClick = (id, event) => {
-    // Ensure event is always present and not undefined
-    console.log({ color })
+  const handleClick = (id) => {
     if (selectedTile === id) {
-      // If the clicked tile is already selected, deselect it
       setSelectedTile(null)
       setBackgroundSelected(false)
     } else {
-      // If the clicked tile is not selected, select it
       setSelectedTile(id)
       setBackgroundSelected(false)
 
-      // Find the newly selected tile
       const newSelectedTile = tiles.find((tile) => tile.id === id)
-
-      // Update selectedColor to the background color of the new tile
       setSelectedColor(newSelectedTile.backgroundColor)
     }
   }
@@ -61,26 +70,29 @@ const BentoGrid = () => {
   }
 
   const handleTileClick = (id) => {
-    // Prevent deselection when clicking inside the tile
     setSelectedTile(id)
     setBackgroundSelected(false)
 
-    // Find the clicked tile
     const clickedTile = tiles.find((tile) => tile.id === id)
-
-    // Update selectedColor to the background color of the clicked tile
     setSelectedColor(clickedTile.backgroundColor)
   }
 
   const backgroundSelectedFunc = () => {
     if (backgroundSelected) {
-      // If background is already selected, deselect it
       setBackgroundSelected(false)
     } else {
-      // If background is not selected, select it
       setSelectedTile(null)
       setBackgroundSelected(true)
     }
+  }
+
+  const getShadowIntensityKey = (boxShadowValue) => {
+    for (const key in shadowSizeMapping) {
+      if (shadowSizeMapping[key] === boxShadowValue) {
+        return key
+      }
+    }
+    return "" // Return empty string if no matching key is found
   }
 
   const addTitle = () => {
@@ -94,53 +106,27 @@ const BentoGrid = () => {
     )
     setTiles(newTiles)
   }
+
   const handlePropertyChange = (id, property, value) => {
     const newTiles = tiles.map((tile) =>
       tile.id === id ? { ...tile, [property]: value } : tile
     )
 
     if (property === "backgroundColor") {
-      // Update background color of the selected tile only
-      const updatedTiles = newTiles.map((tile) => {
-        if (tile.id === id) {
-          console.log(
-            `Setting background color for tile with id ${id} to ${value}`
-          )
-          console.log({ value })
-          return { ...tile, backgroundColor: value }
-        } else {
-          return tile
-        }
-      })
-
+      const updatedTiles = newTiles.map((tile) =>
+        tile.id === id ? { ...tile, backgroundColor: value } : tile
+      )
+      setTiles(updatedTiles)
+    } else if (property === "boxShadow") {
+      const boxShadow = shadowSizeMapping[value]
+      const updatedTiles = newTiles.map((tile) =>
+        tile.id === id ? { ...tile, boxShadow: boxShadow } : tile
+      )
       setTiles(updatedTiles)
     } else {
       setTiles(newTiles)
     }
   }
-
-  // const handlePropertyChange = (id, property, value) => {
-  //   const newTiles = tiles.map((tile) =>
-  //     tile.id === id ? { ...tile, [property]: value } : tile
-  //   )
-
-  //   if (property === "backgroundColor") {
-  //     // Update background color of the selected tile only
-  //     const updatedTiles = newTiles.map((tile) =>
-  //       tile.id === id ? { ...tile, backgroundColor: value } : tile
-  //     )
-
-  //     setTiles(updatedTiles)
-  //   } else {
-  //     setTiles(newTiles)
-  //   }
-  // }
-
-  const verticalAlignOptions = [
-    { label: "Top", value: "flex-start" },
-    { label: "Center", value: "center" },
-    { label: "Bottom", value: "flex-end" },
-  ]
 
   const bringToFront = () => {
     if (selectedTile) {
@@ -166,8 +152,18 @@ const BentoGrid = () => {
     }
   }
 
+  const shadowIntensityOptions = [
+    { label: "None", value: "none" },
+    { label: "Small", value: "shadow-sm" },
+    { label: "Medium", value: "shadow-md" },
+    { label: "Large", value: "shadow-lg" },
+    { label: "Extra Large", value: "shadow-xl" },
+    { label: "2x Large", value: "shadow-2xl" },
+  ]
+
   return (
     <div className="flex items-start h-fit bg-gray-100 p-6">
+      {/* Sidebar */}
       <div className="mr-2 bg-white rounded shadow w-36">
         <button
           className={`text-left pb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition duration-300 ${
@@ -178,6 +174,7 @@ const BentoGrid = () => {
           Background
         </button>
         <div>
+          {/* Tile buttons */}
           {tiles.map((tile) => (
             <div key={tile.id} className="relative">
               <button
@@ -198,7 +195,7 @@ const BentoGrid = () => {
               </button>
               {selectedTile === tile.id && (
                 <button
-                  className="absolute top-0 right-0 mt-1 mr-1 transition-transform duration-300 transform hover:scale-110"
+                  className="absolute top-1 right-0 mt-1 mr-1 transition-transform duration-300 transform hover:scale-110"
                   onClick={() => deleteTile(tile.id)}
                 >
                   <TiDelete size={25} color="red" />
@@ -206,6 +203,7 @@ const BentoGrid = () => {
               )}
             </div>
           ))}
+          {/* Add tile button */}
           <button
             className="flex items-center justify-center mb-2 py-2 px-6 text-md w-full hover:rounded transition transform hover:scale-110"
             onClick={addTitle}
@@ -216,6 +214,7 @@ const BentoGrid = () => {
           </button>
         </div>
       </div>
+      {/* Properties panel */}
       <div className="mr-2 bg-white p-6 rounded shadow w-3/12 h-auto overflow-scroll max-h-[75vh]">
         <h2 className="text-center mb-4 text-lg font-semibold">Properties</h2>
         {backgroundSelected === false && selectedTile === null ? (
@@ -230,6 +229,7 @@ const BentoGrid = () => {
         ) : (
           <>
             <div className="">
+              {/* Font size slider */}
               <label htmlFor="fontSize" className="block mb-1">
                 Font Size:
                 <span className="text-sm ml-2">
@@ -258,6 +258,7 @@ const BentoGrid = () => {
             </div>
 
             <div className="mb-4">
+              {/* Font family selector */}
               <label htmlFor="fontFamily" className="block mb-1">
                 Font Family:
               </label>
@@ -298,9 +299,11 @@ const BentoGrid = () => {
                 <option value="Arial Narrow">Arial Narrow</option>
                 <option value="Century Gothic">Century Gothic</option>
                 <option value="Century">Century</option>
+                {/* Add more font options if needed */}
               </select>
             </div>
             <div className="mb-4 flex items-center justify-between">
+              {/* Text alignment selectors */}
               <label htmlFor="textAlign" className="block mb-1 mr-2">
                 Text Align:
               </label>
@@ -323,6 +326,7 @@ const BentoGrid = () => {
                 <option value="center">Center</option>
                 <option value="right">Right</option>
               </select>
+              {/* Vertical alignment selectors */}
               <label htmlFor="alignVertical" className="block mb-1 mr-2">
                 Vertical Align:
               </label>
@@ -341,7 +345,33 @@ const BentoGrid = () => {
                 }
                 className="w-2/3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
               >
-                {verticalAlignOptions.map((option) => (
+                <option value="flex-start">Top</option>
+                <option value="center">Center</option>
+                <option value="flex-end">Bottom</option>
+              </select>
+            </div>
+
+            <div className="mb-4">
+              {/* Drop shadow intensity slider */}
+              <label htmlFor="shadowSlider" className="block mb-1">
+                Drop Shadow:
+              </label>
+              <select
+                value={
+                  getShadowIntensityKey(
+                    tiles.find((tile) => tile.id === selectedTile)?.boxShadow
+                  ) || "shadow-md" // Set default value to "shadow-md" if no matching key is found
+                }
+                onChange={(e) => {
+                  handlePropertyChange(
+                    selectedTile,
+                    "boxShadow",
+                    e.target.value
+                  )
+                }}
+                className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              >
+                {shadowIntensityOptions.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
@@ -349,27 +379,7 @@ const BentoGrid = () => {
               </select>
             </div>
 
-            <div className="mb-4">
-              <label htmlFor="dropShadow" className="block mb-1">
-                Drop Shadow:
-              </label>
-              <input
-                type="checkbox"
-                id="dropShadow"
-                checked={
-                  tiles.find((tile) => tile.id === selectedTile)?.dropShadow ||
-                  false
-                }
-                onChange={(e) =>
-                  handlePropertyChange(
-                    selectedTile,
-                    "dropShadow",
-                    e.target.checked
-                  )
-                }
-                className="mr-2"
-              />
-            </div>
+            {/* Background color picker */}
             <ColorPicker
               value={selectedColor}
               onChange={(color) => {
@@ -378,6 +388,7 @@ const BentoGrid = () => {
               }}
               className={"mb-5"}
             />
+            {/* Bring to front and Send to back buttons */}
             <div className="flex justify-between gap-2">
               <button
                 className="w-1/2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
@@ -395,6 +406,7 @@ const BentoGrid = () => {
           </>
         )}
       </div>
+      {/* Grid of tiles */}
       <div
         style={{
           background: color,
@@ -402,9 +414,6 @@ const BentoGrid = () => {
           height: "75vh",
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-          // backgroundImage:
-          //   "linear-gradient(to right, lightgray 1px, transparent 1px), linear-gradient(to bottom, lightgray 1px, transparent 1px)",
-          // backgroundSize: "20px 20px",
           gap: "10px",
           borderRadius: "20px",
           padding: "20px",
@@ -422,15 +431,13 @@ const BentoGrid = () => {
               fontFamily: tile.fontFamily,
               textAlign: tile.textAlign,
               border: selectedTile === tile.id ? "1px solid blue" : "none",
-              boxShadow: tile.dropShadow
-                ? "2px 2px 4px rgba(0, 0, 0, 0.1)"
-                : "none",
+              boxShadow: tile.boxShadow,
               alignItems: tile.alignItems,
               background: tile.backgroundColor,
             }}
             default={{
-              x: 20,
-              y: 20,
+              x: (window.innerWidth - 600 - tile.width) / 2,
+              y: (window.innerHeight - tile.height) / 2,
               width: tile.width,
               height: tile.height,
             }}
