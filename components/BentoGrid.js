@@ -7,7 +7,7 @@ import { IoAddCircleOutline } from "react-icons/io5"
 
 const BentoGrid = () => {
   const defaultTile = {
-    title: "New Title",
+    title: "New",
     width: 200,
     height: 100,
     fontSize: 16,
@@ -25,8 +25,6 @@ const BentoGrid = () => {
     borderRadius: "20px",
     overflow: "hidden",
     backgroundColor: "lightgray",
-    // boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
-    textAlign: "center",
   }
 
   const shadowSizeMapping = {
