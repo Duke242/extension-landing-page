@@ -11,18 +11,19 @@ const BentoGrid = () => {
     width: 200,
     height: 100,
     fontSize: 16,
-    fontFamily: "Arial",
+    fontFamily: "Geneva",
     textAlign: "center",
     boxShadow: "shadow-md",
     alignItems: "flex-start",
-    backgroundColor: "lightgray",
+    backgroundColor: "#c3ebfa",
+    color: "black", // Add text color property with default color
   }
 
   const style = {
     display: "flex",
     justifyContent: "center",
     border: "solid 1px #ddd",
-    borderRadius: "20px",
+    borderRadius: "12px",
     overflow: "hidden",
     backgroundColor: "lightgray",
   }
@@ -48,6 +49,7 @@ const BentoGrid = () => {
   const [selectedTile, setSelectedTile] = useState(null)
   const [backgroundSelected, setBackgroundSelected] = useState(false)
   const [selectedColor, setSelectedColor] = useState("#ffffff")
+  const [textColor, setTextColor] = useState("#000000") // State to store text color
 
   const handleClick = (id) => {
     if (selectedTile === id) {
@@ -65,6 +67,7 @@ const BentoGrid = () => {
   const deleteTile = (id) => {
     const filteredTiles = tiles.filter((tile) => tile.id !== id)
     setTiles(filteredTiles)
+    setSelectedTile(null)
   }
 
   const handleTileClick = (id) => {
@@ -105,14 +108,21 @@ const BentoGrid = () => {
     setTiles(newTiles)
   }
 
+  const handleTextColorChange = (color) => {
+    setTextColor(color)
+    handlePropertyChange(selectedTile, "color", color) // Update text color in properties
+  }
+
   const handlePropertyChange = (id, property, value) => {
+    console.log({ value })
     const newTiles = tiles.map((tile) =>
       tile.id === id ? { ...tile, [property]: value } : tile
     )
 
-    if (property === "backgroundColor") {
+    if (property === "backgroundColor" || property === "color") {
+      console.log({ value })
       const updatedTiles = newTiles.map((tile) =>
-        tile.id === id ? { ...tile, backgroundColor: value } : tile
+        tile.id === id ? { ...tile, [property]: value } : tile
       )
       setTiles(updatedTiles)
     } else if (property === "boxShadow") {
@@ -160,7 +170,7 @@ const BentoGrid = () => {
   ]
 
   return (
-    <div className="flex items-start h-fit bg-gray-100 p-6">
+    <div className="flex items-start h-fit bg-[#dbf3fc] p-6 shadow-2xl rounded">
       {/* Sidebar */}
       <div className="mr-2 bg-white rounded shadow w-36">
         <button
@@ -168,6 +178,7 @@ const BentoGrid = () => {
             backgroundSelected ? "bg-gray-300" : ""
           }`}
           onClick={backgroundSelectedFunc}
+          style={{ borderBottom: "1px solid #c3ebfa" }}
         >
           Background
         </button>
@@ -180,6 +191,10 @@ const BentoGrid = () => {
                   selectedTile === tile.id ? "bg-gray-300" : ""
                 }`}
                 onClick={() => handleClick(tile.id)}
+                style={{
+                  borderBottom: "1px solid #D1D5DB",
+                  textAlign: "center",
+                }}
               >
                 {tile.title ? (
                   tile.title.length > 8 ? (
@@ -207,7 +222,7 @@ const BentoGrid = () => {
             onClick={addTitle}
           >
             <span>
-              <IoAddCircleOutline size={25} color="green" />
+              <IoAddCircleOutline size={25} color="#40C1EF" />
             </span>
           </button>
         </div>
@@ -216,7 +231,7 @@ const BentoGrid = () => {
       <div className="mr-2 bg-white p-6 rounded shadow w-3/12 h-auto overflow-scroll max-h-[75vh]">
         <h2 className="text-center mb-4 text-lg font-semibold">Properties</h2>
         {backgroundSelected === false && selectedTile === null ? (
-          <div>Nothing selected</div>
+          <div className="text-blue-400">Properties will show up here</div>
         ) : backgroundSelected ? (
           <div className="mb-4">
             <label htmlFor="backgroundColor" className="block mb-1">
@@ -358,7 +373,7 @@ const BentoGrid = () => {
                 value={
                   getShadowIntensityKey(
                     tiles.find((tile) => tile.id === selectedTile)?.boxShadow
-                  ) || "shadow-md" // Set default value to "shadow-md" if no matching key is found
+                  ) || "None" // Set default value to "shadow-md" if no matching key is found
                 }
                 onChange={(e) => {
                   handlePropertyChange(
@@ -378,7 +393,12 @@ const BentoGrid = () => {
             </div>
 
             {/* Background color picker */}
+            <label htmlFor="selectedColor" className="block mb-1">
+              Background Color:
+            </label>
             <ColorPicker
+              hidePresets={true}
+              hideInputs={true}
               value={selectedColor}
               onChange={(color) => {
                 setSelectedColor(color)
@@ -386,6 +406,21 @@ const BentoGrid = () => {
               }}
               className={"mb-5"}
             />
+            <div className="mr-2 bg-white rounded shadow w-36">
+              {/* Add ColorPicker for text color */}
+              <div className="mb-4">
+                <label htmlFor="textColor" className="block text-lg mb-1">
+                  Text Color:
+                </label>
+                <ColorPicker
+                  hidePresets={true}
+                  hideInputs={true}
+                  value={textColor}
+                  onChange={handleTextColorChange}
+                />
+              </div>
+              {/* Rest of the sidebar content */}
+            </div>
             {/* Bring to front and Send to back buttons */}
             <div className="flex justify-between gap-2">
               <button
@@ -413,7 +448,7 @@ const BentoGrid = () => {
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
           gap: "10px",
-          borderRadius: "20px",
+          borderRadius: "12px",
           padding: "20px",
           overflow: "auto",
         }}
@@ -442,17 +477,18 @@ const BentoGrid = () => {
             onClick={() => handleTileClick(tile.id)}
           >
             <div>
-              <input
-                type="text"
+              <textarea
                 value={tile.title}
                 onChange={(e) => handleTitleChange(tile.id, e)}
                 className="outline-none"
                 style={{
-                  background: "transparent",
                   border: "none",
                   width: "100%",
+                  resize: "none", // Prevent resizing
                   textAlign: tile.textAlign,
                   alignSelf: "center",
+                  color: tile.color,
+                  background: "none",
                 }}
               />
             </div>

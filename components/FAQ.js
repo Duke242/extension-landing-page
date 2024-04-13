@@ -10,7 +10,7 @@ const faqList = [
     question: "What do I get exactly?",
     answer: (
       <div className="space-y-2 leading-relaxed">
-        A tool to use AI to Make better decisions.
+        A tool to make Bento Grids.
       </div>
     ),
   },
@@ -36,7 +36,7 @@ const Item = ({ item }) => {
       >
         <span
           className={`flex-1 text-base-content ${
-            isOpen ? "text-[#2fbbee]" : ""
+            isOpen ? "text-blue-400" : ""
           }`}
         >
           {item?.question}

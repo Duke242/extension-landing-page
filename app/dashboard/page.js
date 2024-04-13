@@ -3,6 +3,8 @@ import Subscribe from "@/components/Subscribe"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import BentoGrid from "@/components/BentoGrid"
+import Image from "next/image"
+import logo from "@/app/icon.png"
 
 export const dynamic = "force-dynamic"
 
@@ -32,13 +34,25 @@ export default async function Dashboard() {
 
     if (userAccess) {
       return (
-        <main className="min-h-screen p-8 pb-24">
-          {/* <section className="max-w-xl space-y-8"> */}
-          <header className="mb-6">
-            <ButtonAccount />
+        <main className="min-h-screen p-8 pb-0 overscroll-hidden">
+          <ButtonAccount />
+          <header className="mb-6 flex items-center">
+            {/* <ButtonAccount /> */}
+            <div className="flex items-center gap-2 mx-auto">
+              <Image
+                src={logo}
+                alt={`Logo`}
+                className="w-8"
+                placeholder="blur"
+                priority={true}
+                width={32}
+                height={32}
+              />
+              <span className="font-extrabold text-lg">BentoGrids</span>
+            </div>
           </header>
+
           <BentoGrid />
-          {/* </section> */}
         </main>
       )
     } else {

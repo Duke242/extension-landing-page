@@ -5,7 +5,6 @@ import Hero from "@/components/Hero"
 import Pricing from "@/components/Pricing"
 import FAQ from "@/components/FAQ"
 import Footer from "@/components/Footer"
-import WithWithout from "@/components/WithWithout"
 
 export default function Page() {
   return (
