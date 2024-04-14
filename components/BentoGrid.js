@@ -1,9 +1,11 @@
 "use client"
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import ColorPicker from "react-best-gradient-color-picker"
 import { Rnd } from "react-rnd"
 import { TiDelete } from "react-icons/ti"
 import { IoAddCircleOutline } from "react-icons/io5"
+import html2canvas from "html2canvas"
+// import useReactScreenshot from "use-react-screenshot"
 
 const BentoGrid = () => {
   const defaultTile = {
@@ -14,6 +16,7 @@ const BentoGrid = () => {
     fontFamily: "Geneva",
     textAlign: "center",
     boxShadow: "shadow-md",
+    fontWeight: "normal", // Add font weight property with default value
     alignItems: "flex-start",
     backgroundColor: "#c3ebfa",
     color: "black", // Add text color property with default color
@@ -39,17 +42,15 @@ const BentoGrid = () => {
     "shadow-2xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
   }
 
-  const [color, setColor] = useState("#ffffff")
-  const [tiles, setTiles] = useState([
-    {
-      id: Date.now(),
-      ...defaultTile,
-    },
-  ])
+  const [color, setColor] = useState("#f9f9f9")
+  const [tiles, setTiles] = useState([])
   const [selectedTile, setSelectedTile] = useState(null)
   const [backgroundSelected, setBackgroundSelected] = useState(false)
   const [selectedColor, setSelectedColor] = useState("#ffffff")
   const [textColor, setTextColor] = useState("#000000") // State to store text color
+  // const [image, takeScreenshot] = useReactScreenshot()
+
+  const gridRef = useRef(null)
 
   const handleClick = (id) => {
     if (selectedTile === id) {
@@ -61,6 +62,20 @@ const BentoGrid = () => {
 
       const newSelectedTile = tiles.find((tile) => tile.id === id)
       setSelectedColor(newSelectedTile.backgroundColor)
+    }
+  }
+
+  const downloadGrid = async () => {
+    try {
+      const { data, mimeType } = await takeScreenshot(gridRef.current)
+      const blob = new Blob([data], { type: mimeType })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement("a")
+      link.href = url
+      link.download = "grid.png"
+      link.click()
+    } catch (error) {
+      console.error("Error generating image:", error)
     }
   }
 
@@ -114,13 +129,15 @@ const BentoGrid = () => {
   }
 
   const handlePropertyChange = (id, property, value) => {
-    console.log({ value })
     const newTiles = tiles.map((tile) =>
       tile.id === id ? { ...tile, [property]: value } : tile
     )
 
-    if (property === "backgroundColor" || property === "color") {
-      console.log({ value })
+    if (
+      property === "backgroundColor" ||
+      property === "color" ||
+      property === "fontWeight"
+    ) {
       const updatedTiles = newTiles.map((tile) =>
         tile.id === id ? { ...tile, [property]: value } : tile
       )
@@ -170,29 +187,36 @@ const BentoGrid = () => {
   ]
 
   return (
-    <div className="flex items-start h-fit bg-[#dbf3fc] p-6 shadow-2xl rounded">
+    <div className="flex items-start h-fit bg-[#dbf3fc] p-6 text-blue-500 shadow-2xl rounded">
+      <button
+        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+        onClick={downloadGrid}
+      >
+        Download Grid
+      </button>
       {/* Sidebar */}
-      <div className="mr-2 bg-white rounded shadow w-36">
+      <div className="mr-2 bg-[#F5F6F6] rounded-2xl shadow-2xl w-36">
         <button
-          className={`text-left pb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition duration-300 ${
+          className={`text-left text-lg pb-2 py-2 rounded-t-2xl px-6 text-md w-full hover:scale-110 transition duration-300 ${
             backgroundSelected ? "bg-gray-300" : ""
           }`}
           onClick={backgroundSelectedFunc}
-          style={{ borderBottom: "1px solid #c3ebfa" }}
+          // style={{ borderBottom: "1px solid lightgray" }}
         >
           Background
         </button>
         <div>
           {/* Tile buttons */}
           {tiles.map((tile) => (
-            <div key={tile.id} className="relative">
+            <div key={tile.id} className="relative ">
               <button
-                className={`flex line-clamp-1 text-left pb-2 py-2 px-6 text-md w-full hover:bg-gray-200 hover:rounded transition ${
+                className={`flex line-clamp-1 text-left pb-2 py-2 px-6 hover:scale-110 text-md w-full hover:bg-blue-200 hover:rounded transition ${
                   selectedTile === tile.id ? "bg-gray-300" : ""
                 }`}
                 onClick={() => handleClick(tile.id)}
                 style={{
                   borderBottom: "1px solid #D1D5DB",
+                  borderTop: "1px solid #D1D5DB",
                   textAlign: "center",
                 }}
               >
@@ -218,7 +242,7 @@ const BentoGrid = () => {
           ))}
           {/* Add tile button */}
           <button
-            className="flex items-center justify-center mb-2 py-2 px-6 text-md w-full hover:rounded transition transform hover:scale-110"
+            className="flex items-center justify-center py-2 px-6 text-md w-full hover:rounded transition transform hover:scale-110"
             onClick={addTitle}
           >
             <span>
@@ -228,7 +252,7 @@ const BentoGrid = () => {
         </div>
       </div>
       {/* Properties panel */}
-      <div className="mr-2 bg-white p-6 rounded shadow w-3/12 h-auto overflow-scroll max-h-[75vh]">
+      <div className="mr-2 p-6 rounded-2xl text-black shadow w-3/12 h-auto overflow-scroll max-h-[75vh] bg-[#F5F6F6] shadow-2xl">
         <h2 className="text-center mb-4 text-lg font-semibold">Properties</h2>
         {backgroundSelected === false && selectedTile === null ? (
           <div className="text-blue-400">Properties will show up here</div>
@@ -269,7 +293,28 @@ const BentoGrid = () => {
                 className="w-full"
               />
             </div>
-
+            <div className="mb-4">
+              {/* Font weight checkbox */}
+              <label htmlFor="fontWeight" className="block mb-1">
+                <input
+                  type="checkbox"
+                  id="fontWeight"
+                  checked={
+                    tiles.find((tile) => tile.id === selectedTile)
+                      ?.fontWeight === "bolder"
+                  }
+                  onChange={(e) =>
+                    handlePropertyChange(
+                      selectedTile,
+                      "fontWeight",
+                      e.target.checked ? "bolder" : "normal"
+                    )
+                  }
+                  className="mr-2"
+                />
+                Bold
+              </label>
+            </div>
             <div className="mb-4">
               {/* Font family selector */}
               <label htmlFor="fontFamily" className="block mb-1">
@@ -406,21 +451,22 @@ const BentoGrid = () => {
               }}
               className={"mb-5"}
             />
-            <div className="mr-2 bg-white rounded shadow w-36">
-              {/* Add ColorPicker for text color */}
-              <div className="mb-4">
-                <label htmlFor="textColor" className="block text-lg mb-1">
-                  Text Color:
-                </label>
-                <ColorPicker
-                  hidePresets={true}
-                  hideInputs={true}
-                  value={textColor}
-                  onChange={handleTextColorChange}
-                />
-              </div>
-              {/* Rest of the sidebar content */}
+            {/* <div className="mr-2 bg-white rounded w-36"> */}
+            {/* Add ColorPicker for text color */}
+            <div className="mb-4">
+              <label htmlFor="textColor" className="block text-lg mb-1">
+                Text Color:
+              </label>
+              <ColorPicker
+                hidePresets={true}
+                hideInputs={true}
+                hideColorTypeBtns={true}
+                value={textColor}
+                onChange={handleTextColorChange}
+              />
             </div>
+            {/* Rest of the sidebar content */}
+            {/* </div> */}
             {/* Bring to front and Send to back buttons */}
             <div className="flex justify-between gap-2">
               <button
@@ -440,7 +486,9 @@ const BentoGrid = () => {
         )}
       </div>
       {/* Grid of tiles */}
+
       <div
+        ref={gridRef}
         style={{
           background: color,
           width: "calc(100vw - 600px)",
@@ -469,29 +517,29 @@ const BentoGrid = () => {
               background: tile.backgroundColor,
             }}
             default={{
-              x: (window.innerWidth - 600 - tile.width) / 2,
-              y: (window.innerHeight - tile.height) / 2,
+              x: 100,
+              y: 100,
               width: tile.width,
               height: tile.height,
             }}
             onClick={() => handleTileClick(tile.id)}
           >
-            <div>
-              <textarea
-                value={tile.title}
-                onChange={(e) => handleTitleChange(tile.id, e)}
-                className="outline-none"
-                style={{
-                  border: "none",
-                  width: "100%",
-                  resize: "none", // Prevent resizing
-                  textAlign: tile.textAlign,
-                  alignSelf: "center",
-                  color: tile.color,
-                  background: "none",
-                }}
-              />
-            </div>
+            {/* <textarea
+              value={tile.title}
+              onChange={(e) => handleTitleChange(tile.id, e)}
+              className="outline-none"
+              style={{
+                border: "none",
+                width: "100%",
+                resize: "none", // Prevent resizing
+                textAlign: tile.textAlign,
+                alignSelf: "center",
+                color: tile.color,
+                background: "none",
+                fontWeight: tile.fontWeight,
+              }}
+            /> */}
+            Title
           </Rnd>
         ))}
       </div>
