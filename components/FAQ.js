@@ -10,7 +10,7 @@ const faqList = [
     question: "What do I get exactly?",
     answer: (
       <div className="space-y-2 leading-relaxed">
-        A tool to make Bento Grids.
+        A tool to help you decide on whether you should build out your idea.
       </div>
     ),
   },

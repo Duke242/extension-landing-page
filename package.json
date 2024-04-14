@@ -1,5 +1,5 @@
 {
-  "name": "bentogrids",
+  "name": "shouldibuildit",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -35,6 +35,8 @@
     "react-rnd": "^10.4.1",
     "react-syntax-highlighter": "^15.5.0",
     "react-tooltip": "^5.26.3",
+    "set-cookie-parser": "^2.6.0",
+    "source-map-js": "^1.2.0",
     "stripe": "^13.11.0"
   },
   "devDependencies": {

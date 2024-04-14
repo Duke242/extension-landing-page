@@ -2,9 +2,10 @@ import themes from "daisyui/src/theming/themes"
 
 const config = {
   // REQUIRED
-  appName: "BentoGrids",
+  appName: "ShouldIbuildIt",
   // REQUIRED: a short description of your app for SEO tags (can be overwritten)
-  appDescription: "Create Bento Grids, easily.",
+  appDescription:
+    "Simple and quick research to help you decide if you should build out your idea.",
   // REQUIRED (no https://, not trialing slash at the end, just the naked domain)
   domainName: "bentogrids.org",
   crisp: {
