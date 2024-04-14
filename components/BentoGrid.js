@@ -4,8 +4,6 @@ import ColorPicker from "react-best-gradient-color-picker"
 import { Rnd } from "react-rnd"
 import { TiDelete } from "react-icons/ti"
 import { IoAddCircleOutline } from "react-icons/io5"
-import html2canvas from "html2canvas"
-// import useReactScreenshot from "use-react-screenshot"
 
 const BentoGrid = () => {
   const defaultTile = {
@@ -62,20 +60,6 @@ const BentoGrid = () => {
 
       const newSelectedTile = tiles.find((tile) => tile.id === id)
       setSelectedColor(newSelectedTile.backgroundColor)
-    }
-  }
-
-  const downloadGrid = async () => {
-    try {
-      const { data, mimeType } = await takeScreenshot(gridRef.current)
-      const blob = new Blob([data], { type: mimeType })
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement("a")
-      link.href = url
-      link.download = "grid.png"
-      link.click()
-    } catch (error) {
-      console.error("Error generating image:", error)
     }
   }
 
@@ -188,12 +172,6 @@ const BentoGrid = () => {
 
   return (
     <div className="flex items-start h-fit bg-[#dbf3fc] p-6 text-blue-500 shadow-2xl rounded">
-      <button
-        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-        onClick={downloadGrid}
-      >
-        Download Grid
-      </button>
       {/* Sidebar */}
       <div className="mr-2 bg-[#F5F6F6] rounded-2xl shadow-2xl w-36">
         <button
