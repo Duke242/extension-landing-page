@@ -12,7 +12,7 @@ const Pricing = () => {
         <div className="flex flex-col text-center w-full mb-20">
           <p className="font-medium text-[#2fbbee] mb-8">Pricing</p>
           <h2 className="font-bold text-3xl lg:text-5xl tracking-tight">
-            Create Bento Grids, easily.
+            Express your ideas more clearly
           </h2>
         </div>
 
@@ -91,9 +91,9 @@ const Pricing = () => {
                 <div className="space-y-2">
                   <ButtonCheckout priceId={plan.priceId} />
 
-                  <p className="flex items-center justify-center gap-2 text-sm text-center text-base-content/80 font-medium relative">
+                  {/* <p className="flex items-center justify-center gap-2 text-sm text-center text-base-content/80 font-medium relative">
                     Pay once. Access forever.
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>

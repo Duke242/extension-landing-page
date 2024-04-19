@@ -2,10 +2,10 @@ import themes from "daisyui/src/theming/themes"
 
 const config = {
   // REQUIRED
-  appName: "ShouldIbuildIt",
+  appName: "Wriiter",
   // REQUIRED: a short description of your app for SEO tags (can be overwritten)
   appDescription:
-    "Simple and quick research to help you decide if you should build out your idea.",
+    "AI to help you write better, quick feedback to improve over time.",
   // REQUIRED (no https://, not trialing slash at the end, just the naked domain)
   domainName: "bentogrids.org",
   crisp: {
@@ -25,7 +25,7 @@ const config = {
         // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
         // description: "Perfect for small projects",
         // The price you want to display, the one user will be charged on Stripe.
-        price: 9,
+        price: 4,
         // If you have an anchor price (i.e. $29) that you want to display crossed out, put it here. Otherwise, leave it empty
         priceAnchor: 29,
         features: [

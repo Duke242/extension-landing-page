@@ -25,6 +25,7 @@
     "next-sitemap": "^4.2.3",
     "nextjs-toploader": "^1.6.11",
     "nodemailer": "^6.9.13",
+    "openai": "^4.38.0",
     "react": "^18.2.0",
     "react-best-gradient-color-picker": "^3.0.7",
     "react-dom": "18.2.0",

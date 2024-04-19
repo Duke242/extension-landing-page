@@ -10,13 +10,13 @@ const faqList = [
     question: "What do I get exactly?",
     answer: (
       <div className="space-y-2 leading-relaxed">
-        A tool to help you decide on whether you should build out your idea.
+        A tool to help you improve your writing.
       </div>
     ),
   },
   {
     question: "Is is a subscription?",
-    answer: <p>Nope. You pay once and it is yours forever.</p>,
+    answer: <p>Yes, only 4 USD a month.</p>,
   },
 ]
 

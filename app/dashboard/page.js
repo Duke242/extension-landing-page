@@ -38,7 +38,18 @@ export default async function Dashboard() {
           <header className="mb-6 flex items-center">
             <ButtonAccount />
           </header>
-          <IdeaInput />
+          <p className="text-center text-gray-600 text-lg">
+            Download the{" "}
+            <a
+              href="https://example.com/wriiter-extension"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-blue-500"
+            >
+              Wriiter Chrome Extension
+            </a>{" "}
+            for a better writing experience!
+          </p>
         </main>
       )
     } else {

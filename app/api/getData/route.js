@@ -5,8 +5,6 @@ export async function POST(req) {
   const { data } = payload
   console.log({ data })
 
-  // console.log("Received data:", payload)
-
   return new NextResponse({
     status: 200,
     json: { message: "Data received successfully!" },
