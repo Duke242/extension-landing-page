@@ -63,18 +63,17 @@ export async function POST(req) {
     })
 
     const prompt = ChatPromptTemplate.fromTemplate(
-      `You are an excellent writer. Grade this .`
+      `You are an excellent writer. Rate the following passage on a scale of 1-100. Provide feedback on why it's not great and how to improve it. Also, suggest a better way to write this, aiming to make it more simple and concise. Format your response as a JSON object with "rating", "feedback", and "suggestion" fields. Passage: {input}`
     )
     const chain = prompt.pipe(model)
     const response = await chain.invoke({
       input: `${payload.text}`,
     })
     const content = response.content
-    console.log({ content })
-    return NextResponse.json({
-      content: content,
-      status: 201,
-    })
+    const { rating, feedback, suggestion } = JSON.parse(content)
+    console.log({ rating, feedback, suggestion })
+
+    return NextResponse.json({ rating, feedback, suggestion, status: 201 })
   } catch (error) {
     console.error("Error fetching explanation:", error)
     return NextResponse.json({ content: "OpenAIError", status: 500 })
