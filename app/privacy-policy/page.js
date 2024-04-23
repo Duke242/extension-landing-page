@@ -59,37 +59,33 @@ const PrivacyPolicy = () => {
         >
           {`Privacy Policy
 
-Last Updated: April 6, 2024
+Effective Date: April 22, 2024
 
-Welcome to BentoGrids! Our website, located at https://bentogrids.org, is dedicated to helping you create Bento Grids easily. Your privacy is important to us, and we are committed to protecting your personal information.
+Welcome to Wriiter!
 
-1. **Information We Collect**
-   - We collect the following types of information:
-     - Name
-     - Email
-     - Payment information
+At Wriiter, we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, and safeguard your personal information when you use our website located at https://wriiter.co ("Wriiter" or the "Website").
 
-2. **Non-Personal Data Collection**
-   - We use web cookies to collect non-personal information for the purpose of improving user experience and website functionality.
+1. Information We Collect
+We may collect the following types of personal information when you use Wriiter:
+- Name
+- Email address
+- Payment information
 
-3. **Purpose of Data Collection**
-   - We collect your information for the sole purpose of processing orders efficiently and effectively.
+We may also collect non-personal information through the use of web cookies.
 
-4. **Data Sharing**
-   - We do not share your personal data with any third parties. Your information is kept confidential and secure.
+2. Purpose of Data Collection
+We collect your personal information for the purpose of order processing and providing you with our services.
 
-5. **Children's Privacy**
-   - We do not knowingly collect any personal information from children under the age of 13. Our services are intended for individuals who are 13 years of age and older.
+3. Data Sharing
+We do not share your personal information with any other parties, except as required by law or as necessary to provide our services to you.
 
-6. **Updates to the Privacy Policy**
-   - Users will be notified of any updates to this Privacy Policy via email.
+4. Children's Privacy
+We do not knowingly collect any personal information from children under the age of 13. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us so that we can delete such information.
 
-By using BentoGrids, you agree to the terms outlined in this Privacy Policy. If you have any questions or concerns about our privacy practices, please contact us.
+5. Updates to the Privacy Policy
+We may update this Privacy Policy from time to time without prior notice. Any changes will be effective immediately upon posting the revised Privacy Policy on Wriiter. We will notify users of any material changes via email.
 
-Thank you for trusting BentoGrids with your information.
-
-Sincerely,
-The BentoGrids Team`}
+Thank you for using Wriiter!`}
         </pre>
       </div>
     </main>

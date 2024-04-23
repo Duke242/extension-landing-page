@@ -34,7 +34,7 @@ export default async function Dashboard() {
           <header className="mb-6 flex items-center">
             <ButtonAccount />
           </header>
-          <p className="text-center text-gray-600 text-lg">
+          <p className="text-center mb-4">
             Download the{" "}
             <a
               href="https://example.com/wriiter-extension"
@@ -46,6 +46,54 @@ export default async function Dashboard() {
             </a>{" "}
             for a better writing experience!
           </p>
+          <div className="bg-gray-200 rounded-lg p-6">
+            <ol className="list-decimal pl-6 text-lg text-gray-800">
+              <li>
+                <p className="text-left">
+                  Highlight Text: Select the text you want to get feedback on by
+                  clicking and dragging your mouse over it.
+                </p>
+              </li>
+              <li className="mt-4">
+                <p className="text-left">
+                  Right Click: Once you've highlighted the text, right-click on
+                  it to open the context menu.
+                </p>
+              </li>
+              <li className="mt-4">
+                <p className="text-left">
+                  Select "Wriiter": From the context menu, choose the option
+                  labeled "Wriiter."
+                </p>
+              </li>
+              <li className="mt-4">
+                <p className="text-left">
+                  Review Feedback: A pop-up window will appear with quick
+                  feedback on your highlighted text. Take a moment to review the
+                  feedback provided.
+                </p>
+              </li>
+              <li className="mt-4">
+                <p className="text-left">
+                  Revise as Needed: Use the feedback to make any necessary
+                  revisions or improvements to your writing.
+                </p>
+              </li>
+              <li className="mt-4">
+                <p className="text-left">
+                  Continue Writing: After reviewing the feedback, continue
+                  writing or editing your document as needed.
+                </p>
+              </li>
+              <li className="mt-4">
+                <p className="text-left">
+                  Note: Wriiter provides quick feedback to help improve your
+                  writing. However, it's always a good idea to carefully review
+                  and revise your work for clarity, coherence, and accuracy.
+                </p>
+              </li>
+            </ol>
+          </div>
         </main>
       )
     } else {

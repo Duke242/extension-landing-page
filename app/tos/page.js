@@ -57,40 +57,33 @@ const TOS = () => {
           className="leading-relaxed whitespace-pre-wrap"
           style={{ fontFamily: "sans-serif" }}
         >
-          {`Terms of Service
+          {`
+          Terms of Service
 
-Last Updated: April 6, 2024
-
-Welcome to BentoGrids! By accessing or using our website at https://bentogrids.org, you agree to comply with and be bound by the following terms and conditions of use. Please review these terms carefully before using our services.
-
-Acceptance of Terms
-
-By using BentoGrids, you agree to these Terms of Service and our Privacy Policy. If you do not agree with any part of these terms, you may not access or use our services.
-
-User Data
-
-By using our services, you agree to provide accurate and complete information, including your name, email, and payment information if applicable. You also consent to the collection and use of this information for order processing purposes as outlined in our Privacy Policy.
-Non-Personal Data Collection
-
-We may use web cookies to collect non-personal information for the purpose of improving user experience and website functionality. By using our services, you consent to the use of cookies as described in our Privacy Policy.
-
-Data Sharing
-
-We do not share your personal data with any third parties. Your information is kept confidential and secure.
-
-Children's Privacy
-
-BentoGrids is not intended for children under the age of 13, and we do not knowingly collect any personal information from children. By using our services, you affirm that you are 13 years of age or older.
-
-Updates to Terms of Service
-
-We reserve the right to update or modify these Terms of Service at any time without prior notice. Users will be notified of any changes via email. Continued use of our services after any modifications to the Terms of Service constitutes acceptance of those changes.
-If you have any questions or concerns about these Terms of Service, please contact us.
-
-Thank you for using BentoGrids!
-
-Sincerely,
-The BentoGrids Team`}
+          Effective Date: April 22, 2024
+          
+          Welcome to Wriiter!
+          
+          These Terms of Service ("Terms") govern your use of the website located at https://wriiter.co ("Wriiter" or the "Website"), operated by Wriiter. By accessing or using Wriiter, you agree to be bound by these Terms. If you do not agree with any part of these Terms, you may not access or use Wriiter.
+          
+          1. Description of Wriiter
+          Wriiter provides artificial intelligence tools to assist you in improving your writing skills. Through quick feedback and iterative improvements, Wriiter aims to enhance your writing experience.
+          
+          2. User Data Collection
+          Wriiter may collect and store personal information, including but not limited to your name, email address, and payment information. By using Wriiter, you consent to the collection and use of this information as outlined in our Privacy Policy.
+          
+          3. Non-Personal Data Collection
+          Wriiter may also collect non-personal information through the use of web cookies. This information helps us improve the functionality and performance of Wriiter.
+          
+          4. Governing Law
+          These Terms shall be governed by and construed in accordance with the laws of the United States of America.
+          
+          5. Updates to the Terms
+          We may update these Terms from time to time without prior notice. Any changes will be effective immediately upon posting the revised Terms on Wriiter. We will notify users of any material changes via email. Your continued use of Wriiter after the posting of the updated Terms constitutes your acceptance of such changes.
+          
+          For more information about how we collect, use, and disclose your information, please review our Privacy Policy at https://wriiter.co/privacy-policy.
+          
+          Thank you for using Wriiter!`}
         </pre>
       </div>
     </main>
