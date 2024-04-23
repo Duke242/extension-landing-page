@@ -10,12 +10,7 @@ const supabase = createClient(
 )
 
 export async function POST(req) {
-  console.log("hiiii")
   try {
-    // const token = req.headers.get("Authorization")?.replace("Bearer ", "")
-    // const decodedToken = decodeURIComponent(token)
-    // console.log({ decodedToken })
-    // Check if the user is authenticated
     const {
       data: { user },
       error,
@@ -64,7 +59,7 @@ export async function POST(req) {
     })
 
     const prompt = ChatPromptTemplate.fromTemplate(
-      `You are an excellent writer. Grade the following passage on a scale of 1-100. Also, rewrite the passage as a suggestion for the user, aim to make it simpler and concise. Format your response as a JSON object with "rating", "feedback", and "suggestion" fields. Passage: {input}`
+      `You are an excellent writer. Grade the following passage on a scale of 1-100. Also, rewrite the passage, if possible aim to make it simpler and concise. In the suggestion only include your rewritten suggestion of the passage and nothing else. Format your response as a JSON object with "rating", "feedback", and "suggestion" fields. Passage: {input}`
     )
     const chain = prompt.pipe(model)
     const response = await chain.invoke({
