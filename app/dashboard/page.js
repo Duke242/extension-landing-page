@@ -56,14 +56,14 @@ export default async function Dashboard() {
               </li>
               <li className="mt-4">
                 <p className="text-left">
-                  Right Click: Once you've highlighted the text, right-click on
-                  it to open the context menu.
+                  Right Click: Once you&apos;ve highlighted the text,
+                  right-click on it to open the context menu.
                 </p>
               </li>
               <li className="mt-4">
                 <p className="text-left">
                   Select "Wriiter": From the context menu, choose the option
-                  labeled "Wriiter."
+                  labeled &quot;Wriiter.&quot;
                 </p>
               </li>
               <li className="mt-4">
@@ -88,8 +88,9 @@ export default async function Dashboard() {
               <li className="mt-4">
                 <p className="text-left">
                   Note: Wriiter provides quick feedback to help improve your
-                  writing. However, it's always a good idea to carefully review
-                  and revise your work for clarity, coherence, and accuracy.
+                  writing. However, it&apos;s always a good idea to carefully
+                  review and revise your work for clarity, coherence, and
+                  accuracy.
                 </p>
               </li>
             </ol>
