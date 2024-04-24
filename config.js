@@ -19,7 +19,10 @@ const config = {
     plans: [
       {
         // REQUIRED — we use this to find the plan in the webhook (for instance if you want to update the user's credits based on the plan)
-        priceId: "price_1P4v5QJey1A5GHJhNQ7Sroxn",
+        //TEST BELOW
+        // priceId: "price_1P8t9sJey1A5GHJh1Ls8sE0O",
+        //REAL BELOW
+        priceId: "price_1P8t7DJey1A5GHJh6lfEDOYl",
         //  REQUIRED - Name of the plan, displayed on the pricing page
         name: "Starter",
         // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
