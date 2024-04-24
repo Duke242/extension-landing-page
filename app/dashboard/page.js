@@ -62,8 +62,8 @@ export default async function Dashboard() {
               </li>
               <li className="mt-4">
                 <p className="text-left">
-                  Select "Wriiter": From the context menu, choose the option
-                  labeled &quot;Wriiter.&quot;
+                  Select &quot;Wriiter&quot;: From the context menu, choose the
+                  option labeled &quot;Wriiter.&quot;
                 </p>
               </li>
               <li className="mt-4">
