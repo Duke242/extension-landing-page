@@ -20,11 +20,10 @@ const config = {
       {
         // REQUIRED — we use this to find the plan in the webhook (for instance if you want to update the user's credits based on the plan)
         //TEST BELOW
-        // priceId: "price_1P8t9sJey1A5GHJh1Ls8sE0O",
         //REAL BELOW
         priceId: "price_1P8t7DJey1A5GHJh6lfEDOYl",
         //  REQUIRED - Name of the plan, displayed on the pricing page
-        name: "Starter",
+        name: "Basic",
         // A friendly description of the plan, displayed on the pricing page. Tip: explain why this plan and not others
         // description: "Perfect for small projects",
         // The price you want to display, the one user will be charged on Stripe.
@@ -33,10 +32,10 @@ const config = {
         priceAnchor: 29,
         features: [
           // {
-          //   name: "NextJS boilerplate",
+          // name: "NextJS boilerplate",
           // },
-          // { name: "User oauth" },
-          // { name: "Database" },
+          { name: "2000 Characters" },
+          { name: "50 Queries" },
           // { name: "Emails" },
         ],
       },

@@ -3,6 +3,9 @@ import { ChatPromptTemplate } from "@langchain/core/prompts"
 import supabaseServer from "../../../libs/supabaseServer"
 import { createClient } from "@supabase/supabase-js"
 import { ChatOpenAI } from "@langchain/openai"
+// import { Replicate } from "@langchain/community/llms/replicate"
+
+// const replicate = new Replicate()
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -28,7 +31,7 @@ export async function POST(req) {
     // Retrieve the user's profile data
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
-      .select("has_access")
+      .select("has_access, query_count")
       .eq("id", user.id)
       .single()
 
@@ -50,16 +53,23 @@ export async function POST(req) {
       )
     }
 
+    if (profile.query_count >= 50) {
+      return NextResponse.json(
+        { content: "Query count exceeded", status: 429 },
+        { status: 429 }
+      )
+    }
+
     const payload = await req.json()
 
     const model = new ChatOpenAI({
-      modelName: "gpt-3.5-turbo",
+      modelName: "gpt-4-turbo",
       temperature: 0,
-      maxTokens: 4096,
+      maxTokens: 500,
     })
 
     const prompt = ChatPromptTemplate.fromTemplate(
-      `You are an excellent writer. Grade the following passage on a scale of 1-100. Also, rewrite the passage, if possible aim to make it simpler and concise. In the suggestion only include your rewritten suggestion of the passage and nothing else. Format your response as a JSON object with "rating", "feedback", and "suggestion" fields. Passage: {input}`
+      `You are an excellent writer. Grade the following passage on a scale of 1-100. Also, rewrite the passage. In the suggestion only include your rewritten suggestion of the passage and nothing else. Format your response as a JSON object with "rating", "feedback", and "suggestion" fields. Only use words and no markdown or anything else like that. Passage: {input}`
     )
     const chain = prompt.pipe(model)
     const response = await chain.invoke({
@@ -68,6 +78,11 @@ export async function POST(req) {
     const content = response.content
     const { rating, feedback, suggestion } = JSON.parse(content)
     console.log({ rating, feedback, suggestion })
+
+    await supabase
+      .from("profiles")
+      .update({ query_count: profile.query_count + 1 })
+      .eq("id", user.id)
 
     return NextResponse.json({ rating, feedback, suggestion, status: 201 })
   } catch (error) {
