@@ -83,6 +83,8 @@ const TOS = () => {
           
           For more information about how we collect, use, and disclose your information, please review our Privacy Policy at https://wriiter.co/privacy-policy.
           
+          Contact us at wriiter_co@proton.me 
+
           Thank you for using Wriiter!`}
         </pre>
       </div>

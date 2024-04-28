@@ -85,6 +85,8 @@ We do not knowingly collect any personal information from children under the age
 5. Updates to the Privacy Policy
 We may update this Privacy Policy from time to time without prior notice. Any changes will be effective immediately upon posting the revised Privacy Policy on Wriiter. We will notify users of any material changes via email.
 
+Contact us at wriiter_co@proton.me 
+
 Thank you for using Wriiter!`}
         </pre>
       </div>

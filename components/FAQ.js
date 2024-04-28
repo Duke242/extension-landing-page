@@ -18,6 +18,10 @@ const faqList = [
     question: "Is is a subscription?",
     answer: <p>Yes, only 4 USD a month.</p>,
   },
+  {
+    question: "Contact?",
+    answer: <p>Contact us at wriiter_co@proton.me</p>,
+  },
 ]
 
 const Item = ({ item }) => {
