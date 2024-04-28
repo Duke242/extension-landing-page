@@ -5,7 +5,7 @@ const config = {
   appName: "Wriiter",
   // REQUIRED: a short description of your app for SEO tags (can be overwritten)
   appDescription:
-    "AI to help you write better, quick feedback to improve over time.",
+    "AI to help you learn to write better, quick feedback to improve over time.",
   // REQUIRED (no https://, not trialing slash at the end, just the naked domain)
   domainName: "bentogrids.org",
   crisp: {
