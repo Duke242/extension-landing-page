@@ -69,7 +69,7 @@ export async function POST(req) {
     })
 
     const prompt = ChatPromptTemplate.fromTemplate(
-      `You are an excellent writer. Grade the following passage on a scale of 1-100. Also, rewrite the passage. In the suggestion only include your rewritten suggestion of the passage and nothing else. Format your response as a JSON object with "rating", "feedback", and "suggestion" fields. Only use words and no markdown or anything else like that. Passage: {input}`
+      `You are an excellent writer. Grade the following passage on a scale of 1-100. Also, rewrite the passage in what you think will be a score of 90-100. In the suggestion only include your rewritten suggestion of the passage and nothing else. Format your response as a JSON object with "rating", "feedback", and "suggestion" fields. Only use words and no markdown or anything else like that. Passage: {input}`
     )
     const chain = prompt.pipe(model)
     const response = await chain.invoke({
