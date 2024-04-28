@@ -44,7 +44,6 @@ export default async function Dashboard() {
             >
               Wriiter Chrome Extension
             </a>{" "}
-            for a better writing experience!
           </p>
           <div className="bg-gray-200 rounded-lg p-6">
             <ol className="list-decimal pl-6 text-lg text-gray-800">
@@ -95,6 +94,7 @@ export default async function Dashboard() {
               </li>
             </ol>
           </div>
+          <p>Contact at: wriiter_co@proton.me</p>
         </main>
       )
     } else {
