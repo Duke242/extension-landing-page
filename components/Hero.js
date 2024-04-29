@@ -8,8 +8,7 @@ const Hero = () => {
           Level Up Your Writing with AI
         </h1>
         <p className="text-2xl text-gray-500">
-          Struggling with messy writing? Quick feedback improves writing over
-          time.
+          Struggling with messy writing? Let AI review and improve your writing.
         </p>
       </div>
       <div className="w-1/2 h-64 relative">
