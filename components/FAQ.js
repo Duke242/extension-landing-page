@@ -15,7 +15,7 @@ const faqList = [
     ),
   },
   {
-    question: "Is a subscription?",
+    question: "Is it a subscription?",
     answer: <p>Yes, only 4 USD a month.</p>,
   },
   {
