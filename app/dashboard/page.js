@@ -26,7 +26,6 @@ export default async function Dashboard() {
     }
 
     const userAccess = profiles[0].has_access
-    console.log({ userAccess })
 
     if (userAccess) {
       return (
@@ -37,7 +36,7 @@ export default async function Dashboard() {
           <p className="text-center mb-4">
             Download the{" "}
             <a
-              href="https://example.com/wriiter-extension"
+              href="https://chromewebstore.google.com/detail/wriiter/ficpiafejhfmhnmjdafhjkenbjfkecan"
               target="_blank"
               rel="noopener noreferrer"
               className="underline text-blue-500"
