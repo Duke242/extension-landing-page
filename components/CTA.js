@@ -1,6 +1,6 @@
-import Image from "next/image";
-import config from "@/config";
-
+import Image from "next/image"
+import config from "@/config"
+//
 const CTA = () => {
   return (
     <section className="relative hero overflow-hidden min-h-screen">
@@ -27,7 +27,7 @@ const CTA = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default CTA;
+export default CTA
