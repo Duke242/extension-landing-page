@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import config from "@/config";
-
+import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
+import config from "@/config"
+//
 // Use this object to add an icon to the testimonial (optional) like the Product Hunt logo for instance. Only change the values if you add more referrings sites (currently Twitter & Product Hunt)
 const refTypes = {
   productHunt: {
@@ -43,7 +43,7 @@ const refTypes = {
     id: "video",
   },
   other: { id: "other" },
-};
+}
 
 // The list of your testimonials. It needs 11 items to fill the grid. The last one (11th) is featured on large devices (span 2 columns + big font)
 const list = [
@@ -132,16 +132,16 @@ const list = [
     type: refTypes.twitter,
     link: "https://twitter.com/VicPivots/status/1697352442986250413?s=20",
   },
-];
+]
 
 // A single testimonial, to be rendered in  a list
 const Testimonial = ({ i }) => {
-  const testimonial = list[i];
+  const testimonial = list[i]
 
-  if (!testimonial) return null;
+  if (!testimonial) return null
 
   if (testimonial.type === refTypes.video) {
-    return <VideoTestimonial i={i} />;
+    return <VideoTestimonial i={i} />
   }
 
   return (
@@ -192,36 +192,36 @@ const Testimonial = ({ i }) => {
         </figcaption>
       </figure>
     </li>
-  );
-};
+  )
+}
 
 // A video tesionial to build trust. 2 or 3 on a wall of love is perfect.
 const VideoTestimonial = ({ i }) => {
-  const vidRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const vidRef = useRef(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (vidRef.current?.readyState != 0) {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  }, [vidRef?.current?.readyState]);
+  }, [vidRef?.current?.readyState])
 
   const handlePlayVideo = () => {
     if (isPlaying) {
-      vidRef.current.pause();
-      setIsPlaying(false);
+      vidRef.current.pause()
+      setIsPlaying(false)
     } else {
-      vidRef.current.play();
-      setIsPlaying(true);
+      vidRef.current.play()
+      setIsPlaying(true)
 
-      if (vidRef.current?.readyState === 0) setIsLoading(true);
+      if (vidRef.current?.readyState === 0) setIsLoading(true)
     }
-  };
+  }
 
-  const testimonial = list[i];
+  const testimonial = list[i]
 
-  if (!testimonial) return null;
+  if (!testimonial) return null
 
   return (
     <li
@@ -241,8 +241,8 @@ const VideoTestimonial = ({ i }) => {
           width={testimonial.videoWidth}
           height={testimonial.videoHeight}
           onLoadedData={() => {
-            console.log("Video is loaded!");
-            setIsLoading(false);
+            console.log("Video is loaded!")
+            setIsLoading(false)
           }}
         >
           <source
@@ -328,8 +328,8 @@ const VideoTestimonial = ({ i }) => {
         <p>&quot;{testimonial.text}&quot;</p>
       </div>
     </li>
-  );
-};
+  )
+}
 
 const Testimonials11 = () => {
   return (
@@ -422,7 +422,7 @@ const Testimonials11 = () => {
         </ul>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Testimonials11;
+export default Testimonials11
