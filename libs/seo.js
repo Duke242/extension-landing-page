@@ -1,5 +1,5 @@
-import config from "@/config";
-
+import config from "@/config"
+//
 // These are all the SEO tags you can add to your pages.
 // It prefills data with default title/description/OG, etc.. and you can cusotmize it for each page.
 // It's already added in the root layout.js so you don't have to add it to every pages
@@ -61,8 +61,8 @@ export const getSEOTags = ({
 
     // If you want to add extra tags, you can pass them here
     ...extraTags,
-  };
-};
+  }
+}
 
 // Strctured Data for Rich Results on Google. Learn more: https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data
 // Find your type here (SoftwareApp, Book...): https://developers.google.com/search/docs/appearance/structured-data/search-gallery
@@ -104,5 +104,5 @@ export const renderSchemaTags = () => {
         }),
       }}
     ></script>
-  );
-};
+  )
+}

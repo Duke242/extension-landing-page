@@ -63,7 +63,7 @@ export async function POST(req) {
     const payload = await req.json()
 
     const model = new ChatOpenAI({
-      modelName: "gpt-4-turbo",
+      modelName: "gpt-4o",
       temperature: 0,
       maxTokens: 500,
     })
